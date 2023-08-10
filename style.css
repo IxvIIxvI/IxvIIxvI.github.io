@@ -57,8 +57,8 @@
 
 @media screen and (max-aspect-ratio: 21/9) {
   .TopParaghape img {
-    max-width: 100%; /* Limit image width for ultra-wide screens */
-    height: auto; /* Maintain the original aspect ratio */
+    max-width: 100%; 
+    height: auto; 
   }
 }
 
