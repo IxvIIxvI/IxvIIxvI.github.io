@@ -1,158 +1,466 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Redirect</title>
-<!-- Add particles.js library -->
-<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    color: #fff; /* Light text color */
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #1e1e1e; /* Dark background color */
-  }
-  .container {
-    text-align: center;
-    z-index: 1;
-    position: relative;
-  }
-  h1 {
-    font-size: 24px;
-  }
-  a {
-    color: #007bff;
-    text-decoration: none;
-  }
-  #particles-js {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: #1e1e1e; /* Dark background color */
-    z-index: 0;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GavinStrikes Payment Gateway</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="shortcut icon" type="image/png" href="img.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #0e0f14;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: #1a1b24;
+            padding: 20px;
+            border-bottom: 1px solid #2a2b35;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .header-logo {
+            height: 40px;
+            width: auto;
+            position: absolute;
+            left: 20px;
+        }
+
+        .header h1 {
+            font-size: 1.6em;
+            margin: 0;
+            flex: 1;
+            text-align: center;
+        }
+
+        .header-icons {
+            position: absolute;
+            right: 20px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-icon {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+        }
+
+        .header-icon i {
+            margin-right: 5px;
+        }
+
+        .header-icon:hover {
+            color: #00bfff;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        .sidebar {
+            background: #1a1b24;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            max-width: 300px;
+            margin-right: 20px;
+            width: 100%;
+            text-align: left;
+        }
+
+        .sidebar h2 {
+            font-size: 1.4em;
+            margin-bottom: 20px;
+        }
+
+        .sidebar p {
+            font-size: 1.2em;
+            margin: 5px 0;
+            color: #b0b3c1;
+        }
+
+        .content {
+            background: #1a1b24;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            flex: 1;
+            padding: 30px;
+            max-width: 800px;
+        }
+
+        .content h2 {
+            font-size: 1.4em;
+            margin-bottom: 20px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            background: #2a2b35;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+
+        .option i {
+            font-size: 1.5em;
+            margin-right: 15px;
+        }
+
+        .option .option-text {
+            font-size: 1.2em;
+        }
+
+        .continue-button, .cancel-invoice-button {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .continue-button,
+        .cancel-invoice-button {
+            margin: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+
+        .cancel-invoice-button button {
+            display: flex;
+            align-items: center;
+        }
+
+        .cancel-invoice-button i {
+            margin-right: 5px;
+        }
+
+        .continue-button button, .cancel-invoice-button button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            background-color: #00bfff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .continue-button button:hover, .cancel-invoice-button button:hover {
+            background-color: #00a0e0;
+        }
+
+        .more-methods {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #b0b3c1;
+        }
+
+        .more-methods a {
+            color: #00bfff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .more-methods a:hover {
+            color: #00a0e0;
+        }
+
+        .cancel-invoice-button button {
+            background-color: #ff6961;
+        }
+
+        .cancel-invoice-button button:hover {
+            background-color: #e03a2e;
+        }
+
+        .discord-panel {
+            background: #1a1b24;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            max-width: 800px;
+            margin: 20px auto;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .discord-panel h2 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            color: #5865F2;
+        }
+
+        .discord-panel p {
+            font-size: 1.2em;
+            color: #b0b3c1;
+            margin-bottom: 20px;
+        }
+
+        .discord-panel a {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            background-color: #5865F2;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .discord-panel a i {
+            margin-right: 8px;
+        }
+
+        .discord-panel a:hover {
+            background-color: #4854c4;
+        }
+
+        .discord-background {
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background-image: url('/mnt/data/image.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            font-size: 0.8em;
+            color: #b0b3c1;
+            background: #1a1b24;
+            border-top: 1px solid #2a2b35;
+            clear: both;
+        }
+
+        footer a {
+            color: #00bfff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: #00a0e0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .sidebar {
+                margin: 0 0 20px 0;
+            }
+
+            .content {
+                max-width: 100%;
+                margin-right: 0;
+            }
+
+            .discord-panel {
+                max-width: 100%;
+                margin: 20px 0;
+            }
+        }
+
+        .green-check {
+            color: #00ff00;
+        }
+
+        .option.selected {
+            box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.7);
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%; 
+            left: 50%;
+            margin-left: -100px; 
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px; 
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .tooltip .tooltiptext::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+
+        #email-container {
+            margin-top: 20px;
+            display: block;
+        }
+
+        #email-container label {
+            font-size: 1.2em;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        #email-container input[type="email"] {
+            padding: 10px;
+            font-size: 1.2em;
+            width: 100%;
+            border: 1px solid #2a2b35;
+            border-radius: 5px;
+            background: #2a2b35;
+            color: #fff;
+        }
+
+        #email-container input[type="email"]:focus {
+            outline: none;
+            border-color: #00bfff;
+        }
+    </style>
 </head>
 <body>
-<!-- Add particles container -->
-<div id="particles-js"></div>
-<div class="container">
-  <h1>Please use our new website | <a href="https://oblivity.xyz">oblivity.xyz</a></h1>
-  <p><a href="why.html">Understand why we did this</a></p>
-</div>
-<script>
-  // Configure particles.js
-  particlesJS("particles-js", {
-    particles: {
-      number: {
-        value: 80,
-        density: {
-          enable: true,
-          value_area: 800
+    <div class="header">
+        <img src="img.png" alt="Logo" class="header-logo">
+        <h1>Oblivity Checkout</h1>
+        <div class="header-icons">
+            <a href="https://oblivity.wtf/shop/" class="header-icon"><i class="fas fa-store"></i> Store</a>
+            <a href="https://oblivity.wtf/store/index.php?/support/" class="header-icon"><i class="fas fa-info-circle"></i> Help</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <h2>Order Summary</h2>
+            <p>License: Lifetime</p>
+            <p>Total: $20.00</p>
+            <p>Description: Get lifetime access to Oblivity External. Enjoy premium features and updates for a one-time payment.</p>
+
+            <h2>Seller Info</h2>
+            <p>
+                <span class="tooltip">
+                  <span class="green-check"><i class="fas fa-check-circle"></i></span> Oblivity Software LLC
+                  <span class="tooltiptext">Oblivity Software has been verified as a legitimate seller by GavinStrikes Payment Gateway.</span>
+                </span>
+            </p>
+            <p>Member since 6/19/2024</p>
+        </div>
+        <div class="content">
+            <h2>Select Payment Method</h2>
+            <div class="option" data-payment-method="paypal">
+                <i class="fab fa-paypal"></i>
+                <div class="option-text">PayPal (Family & Friends)</div>
+            </div>
+            <div class="option" data-payment-method="card">
+                <i class="fab fa-cc-visa"></i>
+                <div class="option-text">Credit/Debit Card</div>
+            </div>
+            <div class="option" data-payment-method="crypto">
+                <i class="fab fa-bitcoin"></i>
+                <div class="option-text">Crypto</div>
+            </div>
+            <div id="email-container">
+                <label for="email">Enter your email address:</label>
+                <input type="email" id="email" name="email">
+            </div>
+            <div class="button-container">
+                <div class="continue-button">
+                    <button disabled><i class="fas fa-arrow-right"></i> Continue</button>
+                </div>
+                <div class="cancel-invoice-button">
+                    <button><i class="fas fa-times"></i> Cancel Invoice</button>
+                </div>
+            </div>
+            <div class="more-methods">
+                Want more payment methods? 
+                <a href="#">Check out our resellers</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Payment Failed? <a href="#">Read</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="discord-panel">
+        <div class="discord-background"></div> 
+        <h2>Join Our Discord</h2>
+        <p>Connect with our community, get support, and stay updated with the latest news.</p>
+        <a href="#" class="discord-link"><i class="fab fa-discord"></i> Join Discord</a>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 GavinStrikes Payment Gateway. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+
+                document.querySelector('.continue-button').style.display = 'block';
+                document.querySelector('.cancel-invoice-button').style.display = 'block';
+                validateEmail();
+            });
+        });
+
+        document.getElementById('email').addEventListener('input', validateEmail);
+
+        function validateEmail() {
+            const emailInput = document.getElementById('email');
+            const continueButton = document.querySelector('.continue-button button');
+            continueButton.disabled = emailInput.value === '';
         }
-      },
-      color: {
-        value: "#ffffff"
-      },
-      shape: {
-        type: "circle",
-        stroke: {
-          width: 0,
-          color: "#000000"
-        },
-        polygon: {
-          nb_sides: 5
-        }
-      },
-      opacity: {
-        value: 0.5,
-        random: false,
-        anim: {
-          enable: false,
-          speed: 1,
-          opacity_min: 0.1,
-          sync: false
-        }
-      },
-      size: {
-        value: 3,
-        random: true,
-        anim: {
-          enable: false,
-          speed: 40,
-          size_min: 0.1,
-          sync: false
-        }
-      },
-      line_linked: {
-        enable: true,
-        distance: 150,
-        color: "#ffffff",
-        opacity: 0.4,
-        width: 1
-      },
-      move: {
-        enable: true,
-        speed: 6,
-        direction: "none",
-        random: false,
-        straight: false,
-        out_mode: "out",
-        bounce: false,
-        attract: {
-          enable: false,
-          rotateX: 600,
-          rotateY: 1200
-        }
-      }
-    },
-    interactivity: {
-      detect_on: "canvas",
-      events: {
-        onhover: {
-          enable: true,
-          mode: "repulse"
-        },
-        onclick: {
-          enable: true,
-          mode: "push"
-        },
-        resize: true
-      },
-      modes: {
-        grab: {
-          distance: 400,
-          line_linked: {
-            opacity: 1
-          }
-        },
-        bubble: {
-          distance: 400,
-          size: 40,
-          duration: 2,
-          opacity: 8,
-          speed: 3
-        },
-        repulse: {
-          distance: 200,
-          duration: 0.4
-        },
-        push: {
-          particles_nb: 4
-        },
-        remove: {
-          particles_nb: 2
-        }
-      }
-    },
-    retina_detect: true
-  });
-</script>
+    </script>
 </body>
 </html>
