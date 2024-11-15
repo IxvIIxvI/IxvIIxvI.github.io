@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ape</title>
+    <link rel="icon" type="image/png" href="ApeLogo.png">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(180deg, #000000 0%, #111111 50%, #000000 100%);
+            color: #ffffff;
+            line-height: 1.5;
+            min-height: 100vh;
+            opacity: 0;
+            transition: opacity 0.5s ease-in;
+        }
+
+        body.loaded {
+            opacity: 1;
+        }
+
+        nav {
+            position: fixed;
+            width: 100%;
+            padding: 1rem 2%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: saturate(180%) blur(20px);
+            z-index: 1000;
+        }
+
+        .logo {
+            text-decoration: none;
+            margin-left: -20px;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: #ffffff;
+            background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0.9) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 1.5rem 4rem;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 5.5rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0.9) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            animation: fadeUp 1s ease-out 0.2s backwards;
+        }
+
+        .hero-image {
+            width: 100%;
+            max-width: 1200px;
+            margin: 2rem auto 0;
+            border-radius: 24px;
+            animation: fadeUp 1s ease-out 0.4s backwards;
+            transform: perspective(1000px) rotateX(5deg);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .hero-image:hover {
+            transform: perspective(1000px) rotateX(0deg);
+        }
+
+        .cta-button {
+            background: #ffffff;
+            color: #000000;
+            padding: 0.8rem 2rem;
+            border-radius: 980px;
+            font-size: 1.1rem;
+            font-weight: 400;
+            text-decoration: none;
+            transition: all 0.2s;
+            animation: fadeUp 1s ease-out 0.6s backwards;
+        }
+
+        .cta-button:hover {
+            background: #ffffff;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .features-section {
+            padding: 8rem 5% 4rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: left;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .feature-emoji {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .feature h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .feature p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .learn-more {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .learn-more:hover {
+            color: #0071e3;
+        }
+
+        .learn-more::after {
+            content: '→';
+            transition: transform 0.2s ease;
+        }
+
+        .learn-more:hover::after {
+            transform: translateX(5px);
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .pricing-section {
+            padding: 4rem 5% 8rem;
+            text-align: center;
+        }
+
+        .pricing-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 3rem;
+            background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0.9) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: left;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .pricing-card.popular {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ffffff;
+            color: #000000;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .pricing-header {
+            margin-bottom: 2rem;
+        }
+
+        .pricing-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+        }
+
+        .amount {
+            font-size: 3rem;
+            font-weight: 600;
+        }
+
+        .period {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .pricing-button {
+            display: inline-block;
+            width: 100%;
+            padding: 1rem;
+            background: #ffffff;
+            color: #000000;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .pricing-button:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+        }
+
+        .features-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 3rem;
+            text-align: center;
+            background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0.9) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer {
+            padding: 2rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1001;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: rgba(30, 30, 30, 0.95);
+            padding: 2.5rem;
+            border-radius: 20px;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 1.5rem;
+            top: 1rem;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-modal:hover {
+            color: white;
+        }
+
+        .modal-content h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .payment-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .payment-button {
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            font-size: 1rem;
+            transition: all 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .payment-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .payment-button img {
+            height: 20px;
+        }
+
+        .crypto-icon {
+            font-size: 1.2rem;
+        }
+
+        .card-icon {
+            font-size: 1.2rem;
+        }
+
+        .payment-button.robux {
+            background: rgba(0, 162, 255, 0.1);
+        }
+
+        .payment-button.robux:hover {
+            background: rgba(0, 162, 255, 0.2);
+        }
+
+        .robux-icon {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #00A2FF;
+        }
+
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+        }
+
+        .loader-logo {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 2rem;
+            animation: pulse 2s infinite;
+        }
+
+        .loading-bar {
+            width: 200px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .loading-progress {
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, #fff, rgba(255, 255, 255, 0.9));
+            animation: progress 1.5s ease-out forwards;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes progress {
+            0% {
+                width: 0;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
+        .loader.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="loader">
+        <img src="ApeLogo.png" alt="Ape Logo" class="loader-logo">
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+    </div>
+
+    <nav>
+        <a href="#" class="logo">
+            <span class="logo-text">APE</span>
+        </a>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#pricing">Scripts</a>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley" target="_blank">Source Code</a>
+            <a href="https://discord.gg/f9VUJVq5c9" target="_blank">Support</a>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <h1 class="hero-title">Ape</h1>
+        <p class="hero-subtitle">The most powerful script hub platform ever created.</p>
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley" target="_blank" class="cta-button">Purchase</a>
+        <img src="Interface.png" alt="Ape Interface" class="hero-image">
+    </section>
+
+    <section class="features-section" id="features">
+        <h2 class="features-title">Features</h2>
+        <div class="feature-grid">
+            <div class="feature">
+                <span class="feature-emoji">⚡️</span>
+                <h3>Lightning Fast</h3>
+                <p>Experience unmatched performance with our optimized scripts. Built for speed and efficiency, while still being easy to use.</p>
+                <a href="#" class="learn-more">Learn more</a>
+            </div>
+            <div class="feature">
+                <span class="feature-emoji">🔐</span>
+                <h3>Secure</h3>
+                <p>Advanced security features keep you protected and undetected at all times. Your safety is our top priority.</p>
+                <a href="#" class="learn-more">Learn more</a>
+            </div>
+            <div class="feature">
+                <span class="feature-emoji">✨</span>
+                <h3>Intuitive</h3>
+                <p>Designed to be simple yet powerful, making accessible to everyone (even on potato pc). Very user friendly.</p>
+                <a href="#" class="learn-more">Learn more</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing-section" id="pricing">
+        <h2 class="pricing-title">Choose Your Plan</h2>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <div class="pricing-header">
+                    <h3>Weekly</h3>
+                    <div class="price">
+                        <span class="amount">$1</span>
+                        <span class="period">/week</span>
+                    </div>
+                </div>
+                <ul class="pricing-features">
+                    <li>✓ Full Access</li>
+                    <li>✓ All Scripts</li>
+                    <li>✓ 24/7 Support</li>
+                </ul>
+                <a href="#" class="pricing-button">Get Started</a>
+            </div>
+            
+            <div class="pricing-card popular">
+                <div class="popular-badge">Most Popular</div>
+                <div class="pricing-header">
+                    <h3>Monthly</h3>
+                    <div class="price">
+                        <span class="amount">$5</span>
+                        <span class="period">/month</span>
+                    </div>
+                </div>
+                <ul class="pricing-features">
+                    <li>✓ Everything in Weekly</li>
+                    <li>✓ Priority Support</li>
+                    <li>✓ Early Access</li>
+                </ul>
+                <a href="#" class="pricing-button">Get Started</a>
+            </div>
+
+            <div class="pricing-card">
+                <div class="pricing-header">
+                    <h3>Lifetime</h3>
+                    <div class="price">
+                        <span class="amount">$10</span>
+                        <span class="period">one-time</span>
+                    </div>
+                </div>
+                <ul class="pricing-features">
+                    <li>✓ Everything in Monthly</li>
+                    <li>✓ Lifetime Updates</li>
+                    <li>✓ VIP Support</li>
+                </ul>
+                <a href="#" class="pricing-button">Get Started</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>© APE. All rights reserved. If any issue, please contact us at https://discord.gg/f9VUJVq5c9</p>
+    </footer>
+
+    <div class="payment-modal" id="paymentModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Choose Payment Method</h2>
+            <div class="payment-buttons">
+                <button class="payment-button paypal">
+                    <img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-100px.png" alt="PayPal">
+                    Pay with PayPal
+                </button>
+                <button class="payment-button crypto">
+                    <span class="crypto-icon">₿</span>
+                    Pay with Crypto
+                </button>
+                <button class="payment-button card">
+                    <span class="card-icon">💳</span>
+                    Pay with Card
+                </button>
+                <button class="payment-button robux">
+                    <span class="robux-icon">R$</span>
+                    Pay with Robux
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        const getStartedButtons = document.querySelectorAll('.pricing-button');
+        const modal = document.getElementById('paymentModal');
+        const closeButton = document.querySelector('.close-modal');
+
+
+        getStartedButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                modal.style.display = 'flex';
+            });
+        });
+
+
+        closeButton.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        document.querySelectorAll('.payment-button').forEach(button => {
+            button.addEventListener('click', () => {
+                if (button.classList.contains('paypal')) {
+                    window.open('https://discord.gg/f9VUJVq5c9', '_blank');
+                    modal.style.display = 'none';
+                } else if (button.classList.contains('crypto') || button.classList.contains('card')) {
+                    window.open('https://apeclient.mysellix.io/', '_blank');
+                    modal.style.display = 'none';
+                } else if (button.classList.contains('robux')) {
+                    window.open('https://discord.gg/f9VUJVq5c9', '_blank');
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
+        window.addEventListener('load', () => {
+
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+                document.querySelector('.loader').classList.add('fade-out');
+            }, 1000); 
+        });
+    </script>
+</body>
+</html>
